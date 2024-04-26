@@ -90,7 +90,7 @@ void solution::generateSolution(){
 	cursorShow(false);
 	loading("analysing");
 	cout<<"\r";
-	
+
 
 	// 临时的预选方案
 	int myChoiceFlag[N][N+1] = {0};
@@ -190,7 +190,7 @@ void solution::generateSolution(){
 
 //Core Function
 void solution::findSolution(map<int, string> &candidateMap, const int candiateFlag[N][N]){
-	static int count=0;
+	static int count = 0;
 	if(tempLegalityMap.size()==N){ // 临时合法映射已经满足所有保安
 		// 所有保安都分配了休息日，输出解决方案
 		color(14);
@@ -212,7 +212,7 @@ void solution::findSolution(map<int, string> &candidateMap, const int candiateFl
 	}
 	int currentNode = 0;
 	if(!candidateMap.empty())
-	currentNode = candidateMap.begin()->first;
+		currentNode = candidateMap.begin()->first;
 	for(int j = 0; j<N; j++){
 		if(candiateFlag[currentNode][j]==1){
 			// 决策开始...
@@ -235,8 +235,9 @@ void solution::findSolution(map<int, string> &candidateMap, const int candiateFl
 void solution::saveSolution(){
 
 	if(currentAllSolution.size()==0){
-		cout<<"==>请完成操作2再来尝试[手动滑稽]<=="<<endl;
-		return;
+		color(12);
+		cout<<"==>请完成操作1再来尝试[手动滑稽]<=="<<endl;
+		color(7);
 	}
 	int choice;
 	while(true){
@@ -348,13 +349,13 @@ void solution::showCurrentSolution(){
 	loading("loading");
 	if(currentAllSolution.size()==0){
 		ifstream file;
-		file.open("currenSolution.txt", ios::in);//默认文本文件形式打开
+		file.open("currentSolution.txt", ios::in);//默认文本文件形式打开
 
 		if(file){
 			stringstream ss; //字符串流
 			ss<<file.rdbuf();//一次性读取文件全部内容
 			string allContent = ss.str();
-			loading("loading");
+			if(allContent=="") cout<<endl<<"你要看的文件信息飞走了V|V"<<endl;
 			cout<<"\r";
 			cout<<allContent;
 		}
@@ -405,7 +406,7 @@ void solution::saveCurrentSolution(){
 
 void solution::concurrentSaveSolution(){
 
-	ofstream ofs1,ofs2;
+	ofstream ofs1, ofs2;
 	ofs1.open("currentSolution.txt", ios::out|ios::ios_base::trunc); //以追加模式打开，不存在则创建
 	ofs2.open("hostorySolution.txt", ios::out|ios::ios_base::app); //以追加模式打开，不存在则创建
 	//写入解决方案
@@ -414,7 +415,7 @@ void solution::concurrentSaveSolution(){
 	auto now_c = chrono::system_clock::to_time_t(now);
 	// 创建足够大的缓冲区并使用 `strftime` 转换为字符串
 	struct tm localtime;
-	localtime_s(&localtime,&now_c);//转换为本地时区
+	localtime_s(&localtime, &now_c);//转换为本地时区
 	char buffer[80];
 	strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &localtime);
 	cursorShow(false);
